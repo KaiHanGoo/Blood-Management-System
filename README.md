@@ -1,6 +1,6 @@
 The project is about a database for blood donating systems and below are a few pieces of information that have been collected in each category.
 
-1. Donor
+1. Donor: 
 A donor is the person who donates his/her blood. Each donor can have many donations and their basic information is recorded for tracing. Each donor has a unique ID and the data stored on the Donor are donor IC, donor name, donor address, donor postcode, donor city, state, and donor phone number, Donor Details are donor gender, donor blood type, donor rhesus, donor weight and donor qualification.
 
 2. Donation
