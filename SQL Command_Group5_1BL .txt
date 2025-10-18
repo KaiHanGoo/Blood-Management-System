@@ -1,0 +1,367 @@
+
+CREATE TABLE staff
+(Staff_ID varchar(5) primary key not null,
+Staff_Name varchar(70),
+Staff_Position varchar(5),
+Staff_Address varchar(30),
+Staff_Postcode char(5),
+Staff_City varchar(15),
+Staff_State varchar(15),
+Staff_Phone char(12),
+Staff_Gender char(1));
+
+insert into staff values
+('S0001','Kane Lim','Admin','48,Jalan Merbok 1, Taman Bunga Blossom', '70100','Seremban','Negeri Sembilan','011-23187905','Female'),
+('S0002','Angeline Chuang May Teng','Admin','D-g7 pangsapuri , Emerald Residence','75450','Bukit Beruang','Melaka','017-6073331','Female'),
+('S0003','Nicholas Chong Min Xuan', 'Admin','46, Jalan Dungun, Damansara Heights Level 11','50490','Maluri','Kuala Lumpur','014-7362823','Male'), 
+('S0004','Chew Zi Quan','Staff','37, Jeremy Bukit Batu Bakri','84000','Muar','Johor','011-15115516','Male'),
+('S0005','Vivian Wee Sze Vian','Staff','Pangsaburi Mutiara Subang, Jalan U5/9','40150','Shah Alam','Selangor','011-10760923','Female'),
+('S0006','Nicole Cheock Pui Yee','Staff', '48, Jalan Pantai Halban, Bandar Darulaman Jaya','06000','Jitra','Kedah','017-2923811','Female'),
+('S0007','Aisyah Binti Hurul Ainis','Staff','283, Jalan Bukit Jambul, Buriton Jambul','11900','Bayan Lepas', 'Pulau Penang','012-6083968','Female'),
+('S0008','Yugathasini A/P parvin','Staff','2, Jalan Tanjung Damai 2, Pinggir Tanjung Damai','31250','Tanjung Rambutan','Perak','016-2136461','Female'),
+('S0009','Pee Jia Rou','Staff','9,Jalan Simpang 3, Taman Simpang','93514','Kuching','Sarawak','016–7359247','Female'),
+('S0010','Joseph Yeo','Admin','3, Lorong Aman,Taman Aman','91100','Lahad Datu','Sabah','016-9771998','Male');
+
+CREATE TABLE donor(
+Donor_ID VARCHAR(5) primary key not null,
+Donor_IC VARCHAR(12),
+Donor_Name VARCHAR(30),
+Donor_Address VARCHAR(70),
+Donor_Postcode CHAR(5),
+Donor_City VARCHAR(15),
+Donor_State VARCHAR(15),
+Donor_Phone CHAR(11),
+Donor_Gender VARCHAR(1),
+Donor_Bloodtype VARCHAR(2),
+Donor_Rhesus VARCHAR(1),
+Donor_Weight DECIMAL(5,2),
+Donor_Qualification VARCHAR(1));
+
+insert into donor values
+('D0001','981201-04-4386','Lim Qing Ting','Jalan Puteri Hang Li Poh, Kampung Durian Daun','75100','Alor Gajah','Melaka','011-1700 0867','F','A','+','58kg','Y'),
+('D0002','010722-01-1122','Nurul Huda Binti Noh Hairul','Jalan Wayang, Kampung Seri Lalang','81900','Kota Tinggi','Johor','017-681 4872','F','AB','+','49kg','Y'),
+('D0003','070619-10-2456','Choong Kai Wen','10th Floor, Surian Tower 1, Jalan PJU 7, Mutiara Damansara','47810','Petaling Jaya','Selangor','014-767 5517','F','A','+','35kg','N'),
+('D0004','840505-06-3067','Muthu a/l Balachandran','Taman Anggerik Heights Utama, Kampung Marong','28700','Bentong','Pahang','012-305 4056','M','B','+','67kg','Y'),
+('D0005','031116-07-0699','Yussuf bin Saiful Abdullah','Islam Global, 70, Lorong Mahsuri 10, Bayan Baru','11900','Bayan Lepas','Pulau Pinang','018-765 8637','M','O','+','41kg','N'),
+('D0006','780411-04-5126','Shalini a/p Anbuselvan','No.1, Bt 15, Air Merbau','77200','Jasin','Melaka','011-2824 2630','F','AB','-','52kg','Y'),
+('D0007','560131-11-3301','Ahmad Aydin Bin Nur Irffan','No.2, Stadium Sultan Ismail, Jalan Sultan Ismail','20000','Kuala Terengganu','Terengganu','016-735 3774','M','B','+','60kg','N'),
+('D0008','640920-03-8255','Stephen Chow','C1-12-19, No.4441, Blok Pasir Puteh, Kampung Ayer Lanas','15200','Ayer Lanas','Kelantan','011-3049 4066','M','B','+','73kg','Y'),
+('D0009','810628-01-7350','Tamilarasi a/p Vishnu','24, Jalan Muar, Bukit Bakri','84000','Muar','Johor','012-218 0781','F','A','+','62kg','Y'),
+('D0010','921229-12-9771','Low Jun Rui','14-16, Lorong Seri Borneo 1, Taman Seri Borneo','88450','Kota Kinabalu','Sabah','019-838 9767','M','O','-','63kg','Y');
+
+
+CREATE TABLE bloodbank
+(Blood_ID varchar(5) primary key not null,
+Blood_Type varchar(2) not null,
+Blood_Rhesus char(1) not null,
+Blood_Quantity int not null,
+Staff_ID varchar(5) not null,
+foreign key (Staff_ID) references staff(Staff_ID) on delete restrict);
+
+insert into bloodbank values
+('BL001','A','+','200','S0006'),
+('BL002','A','-','30','S0006'),
+('BL003','B','+','150','S0005'),
+('BL004','B','-','40','S0005'),
+('BL005','AB','+','250','S0008'),
+('BL006','AB','-','10','S0008'),
+('BL007','O','+','100','S0007'),
+('BL008','O','-','20','S0007');
+
+
+CREATE TABLE blood_detail
+(Blood_Bag_ID varchar(5) primary key not null,
+Date_Distribute date,
+Date_Expire date,
+Blood_ID varchar(5) not null,
+foreign key (Blood_ID) references bloodbank(Blood_ID) on delete restrict);
+
+insert into blood_detail values
+('BB001','2023-01-14','2023-02-09','BL003'),
+('BB002','2023-01-14','2023-02-06','BL001'),
+('BB003','2023-01-16','2023-02-09','BL003'),
+('BB004','2023-01-18','2023-02-14','BL005'),
+('BB005','2023-01-20','2023-02-14','BL005'),
+('BB006','2023-01-22','2023-02-06','BL001'),
+('BB007','2023-01-24','2023-02-16','BL007'),
+('BB008','2023-01-24','2023-02-16','BL006');
+
+
+CREATE TABLE hospital
+(Hos_ID varchar(5) primary key not null,
+Hos_Address varchar(50),
+Hos_Postcode char(5),
+Hos_State varchar(15) not null,
+Hos_Phone char(11) not null,
+Hos_Name varchar(50));
+
+insert into hospital values
+('H0001','No 3, Mahkota Melaka, Jln Merdeka','75000','Melaka','06-9543331','Mahkota Medical Centre'),
+('H0002','No. 2418-1, KM 8, Lebuh Ayer Keroh, Ayer Keroh','75450','Melaka','06-2549976','Pantai Hospital'),
+('H0003','lot 25, Jalan Raja Muda Abdul Aziz, Kampung Baru','50300','Kuala Lumpur','03-2249983','Hospital Tunku Azizah'),
+('H0004','Jalan Mewah Utara, Taman Pandan Mewah, Ampang','68000','Selangor','03-5431273','Ampang Hospital'),
+('H0005','238, Jalan Macalister, George Town','10400','Pulau Pinang','04-2388888','Loh Guan Lye Specialists Centre');
+
+
+CREATE TABLE request_details
+(Blood_ID varchar(5) not null,
+Hos_ID varchar(5) not null,
+Request_Quantity int not null,
+Date_Lupdate date,
+primary key (Blood_ID, Hos_ID),
+foreign key (Blood_ID) references bloodbank(Blood_ID) on delete restrict,
+foreign key (Hos_ID) references Hospital(Hos_ID) on delete restrict);
+
+
+insert into request_details values
+('BL001','H0001',10,'2023-01-16'),
+('BL003','H0001',8,'2023-01-16'),
+('BL001','H0002',5,'2023-01-18'),
+('BL005','H0003',7,'2023-01-20'),
+('BL005','H0004',15,'2023-01-22'),
+('BL003','H0005',20,'2023-01-24');
+
+CREATE TABLE recipient
+(Reci_ID varchar(5) primary key not null,
+Reci_Name varchar(70),
+Reci_Age int,
+Reci_Phone char(11),
+Reci_Gender char(1),
+Reci_Bloodtype(2),
+Reci_BAmt int,
+Received_Date date,
+foreign key (Staff_ID) references staff(Staff_ID) on delete restrict,
+foreign key (Hos_ID) references Hospital(Hos_ID) on delete restrict);
+
+insert into recipient values
+('R0001','Chong Bi Wei','20','F','A','200','2022-06-02'),
+('R0002','Edward Lim','45','012-9150782','M','O','300','2023-01-02'),
+('R0003','Frankie Ngai Qin Feng','22','012-2830788','M','B','250','2022-11-13'),
+('R0004','Kaylynn Huang Kai Lyn','33','012-9733895','F','AB','400','2022-12-23'),
+('R0005','Wong Li Jing', '66','011-3092317','F','B','450',	'2022-03-22'),
+('R0006','Samuel Ho Jia Jun','57','010-9822927','M','A','200','2023-01-19'),
+('R0007','Ubean Tock','71','011-16799799','M','O','400','2022-12-31'),
+('R0008','Violet Liew','39','018-3178085','F','AB','350','2022-09-05'),
+('R0009','Edison Wong Jia Qun','68','018-3881595','M','B','220','2023-01-09'),
+('R0010','Priscilla Goh Xuan Hui','49','011-635-5213','F','B','500','2022-05-17');
+
+
+CREATE TABLE donation
+(Donation_ID varchar(8) not null,
+Date_Donate date not null,
+Donor_ID varchar(5) not null,
+Blood_Type varchar(2),
+Blood_ID varchar(5) not null,
+Blood_Rhesus char(1),
+Donation_Amt int,
+Donation_Place varchar(25) not null,
+Staff_ID varchar(5) not null,
+primary key (Donation_ID,Donor_ID,Blood_ID),
+foreign key (Blood_ID) references bloodbank(Blood_ID) on delete restrict,
+foreign key (Staff_ID) references staff(Staff_ID) on delete restrict,
+foreign key (Donor_ID) references donor(Donor_ID) on delete restrict);
+
+insert into donation values  
+('DNF0001', '2022-12-13', 'D0001', 'A', 'BL001', '+', '200', 'Klinik Kesihatan Alor Gajah','S0001'),
+('DNF0002', '2022-10-10', 'D0002', 'AB', 'BL002', '+', '30', 'Klink Kesihatan Kota Tinggi','S0002'),
+('DNF0003', '2022-02-13', 'D0003', 'A', 'BL003', '+', '150', 'Klink Kesihatan Petaling Jaya','S0003'),
+('DNF0004', '2022-08-18', 'D0004', 'B', 'BL004', '+', '40', 'Klink Kesihatan Bentong',S0004'),
+('DNF0005', '2022-09-18', 'D0005', 'O', 'BL005', '+', '250', 'Klink Kesihatan Bayan Lepas','S0005'),
+('DNF0006', '2022-01-10', 'D0006', 'AB', 'BL006', '-', '10', 'Klink Kesihatan Jasin','S0006'),
+('DNF0007', '2022-12-13', 'D0007', 'B', 'BL007', '+', '100', 'Klink Kesihatan Kuala Terengganu','S0007'),
+('DNF0008', '2022-01-10', 'D0008', 'B', 'BL008', '+', '20', 'Klink Kesihatan Ayer Lenas',S0009'),
+('DNF0009', '2022-05-14', 'D0009', 'A', 'BL001', '+', '200', 'Klink Kesihatan Muar',S0010'),
+('DNF0010', '2022-12-15', 'D0010', 'O', 'BL003', '-', '30', 'Klink Kesihatan Kota Kinabalu','S0008');
+
+
+
+SQL COMMAND FOR QUERY
+DDL AND DML 
+1.  This SELECT statement displays all the Clinic_ID in the record.
+
+SELECT Clinic_ID FROM CLINIC;
+
+2.  This INSERT statement adds a new value to the record.
+INSERT INTO DONOR VALUES
+
+('D0011','751111-04-4386','Ong Ah Seng','Jalan Puteri Hang Li Poh, Kampung Durian Daun','75350','Melaka Tengah','Melaka','016-1734 789','F','A','+','58kg','Y');
+
+3.  This UPDATE statement allows developers to change the information of a specific donor. By having this command, a flawless database system is fulfilled. Use the SELECT command again to make sure the information is updated successfully.
+
+UPDATE DONOR
+SET Donor_Gender = 'M'
+WHERE Donor_ID = 'D0011';
+select Donor_ID,Donor_Gender from donor;
+
+4.  This DELETE command can delete a specific row by stating the condition. By using this command, developers can delete wrong or unnecessary information. Use the SELECT command again to make sure the information is deleted successfully.
+
+DELETE FROM DONOR
+WHERE Donor_ID = 'D0011';
+
+FUNCTION 
+1.   Display the name of the donor who donates the maximum amount of blood.
+
+SELECT donor.donor_name, MAX(donation.donation_amt) 
+FROM donation, donor 
+Where donation.donor_id = donor.donor_id
+GROUP BY donor.donor_name
+ORDER BY MAX(donation.donation_amt) DESC
+LIMIT 1;
+
+2.  Display staff name and their phone number where blood_rhesus is ‘positive’. 
+
+SELECT staff_name, staff_phone
+FROM staff
+WHERE staff_id IN (SELECT staff_id FROM bloodbank WHERE blood_rhesus = '+');
+
+OR 
+
+SELECT staff_name, staff_phone
+FROM staff
+JOIN bloodbank
+ON bloodbank.staff_id = staff.staff_id AND
+blood_rhesus = '+';
+
+3.  Select the request quantity and date received (date_Lupdate) by the hospital where the blood type is ‘b’ and the hospital for which the request is ‘Mahkota’. 
+
+SELECT request_quantity, date_Lupdate
+FROM request_details
+JOIN bloodbank
+ON request_details.blood_id = bloodbank.blood_id
+JOIN hospital
+ON request_details.hos_id = hospital.hos_id
+WHERE bloodbank.blood_type = 'B'AND
+hospital.hos_name LIKE 'Mahkota%';
+
+4. Show the date of donation and the place where the donor state starts with ‘M’ and blood type is ‘AB-’. 
+
+SELECT date_donate, donation_place
+from donation, donor, bloodbank
+where donation.donor_id = donor.donor_id and
+donation.blood_id = bloodbank.blood_id
+and donor_state like 'M%' and
+blood_type = 'AB' and
+blood_rhesus = '-';
+
+5.  Show the donor name and donation amount while arranging the donation amount in ascending order.
+
+SELECT donor_name, donation_amt FROM donor
+JOIN donation 
+ON donor.donor_id = donation.donor_id
+ORDER BY donation_amt ASC;
+
+6.  Display the total number of staff for each gender.
+
+SELECT staff_gender, COUNT(staff_gender) FROM staff
+GROUP BY staff_gender;
+
+7. Display the total number of donors for each gender. 
+
+SELECT donor_gender, COUNT(donor_gender) FROM donor
+GROUP BY donor_gender;
+
+8. Show the total number of staff where the phone number ends with ‘one’.
+
+SELECT count(staff_phone) FROM staff
+WHERE staff_phone LIKE '%1';
+
+9.  Find the average weight for female and male donors, and name the newly created column as average_weight. 
+
+SELECT donor_gender, avg(donor_weight) AS average_weight from donor
+GROUP BY donor_gender;
+
+10.  Display the total amount of blood donation on 2022-12-13, and the donor is a woman.
+
+SELECT SUM(donation.donation_amt)
+FROM donation
+JOIN donor ON donation.donor_id = donor.donor_id
+WHERE donor.donor_gender = 'F'
+AND date_donate = '2022-12-13'
+GROUP BY donation.date_donate;
+
+OR
+
+SELECT SUM(donation_amt) from donation
+WHERE donation.donor_id IN(
+SELECT donor.donor_id from donor
+WHERE donor.donor_gender = 'F' 
+AND date_donate = '2022-12-13'
+GROUP BY date_donate);
+
+
+11.  Show the blood type, rhesus, and quantity where the donation is held in Jasin.
+
+SELECT bloodbank.blood_type, bloodbank.blood_rhesus, bloodbank.blood_quantity
+FROM bloodbank
+WHERE bloodbank.blood_id IN (
+SELECT donation.blood_id
+FROM donation
+WHERE donation_place LIKE '%jasin');
+
+12. Show the donation date where the donor donates has postcode starting with ‘7’.
+
+SELECT date_donate FROM donation
+WHERE donation.donor_id IN (
+SELECT donor.donor_id FROM donor
+WHERE donor.donor_postcode LIKE '7%');
+
+PROCEDURE
+1. Show a procedure when the Blood Type is submitted, it will generate the report about the total amount of donated blood per year and the total number of donation per each blood type. This report will display the blood id, blood type, total amount(ml) of donated blood  and total number of donation.
+
+CREATE PROCEDURE GetBloodReport(In Blood_Type varchar(2))
+SELECT bloodbank.Blood_ID,bloodbank.Blood_Type, year(donation.date_donate),sum(donation.Donation_Amt) AS 'Total Amount of Donated Blood (ml)',count(donation.donation_ID) AS 'Total Number Of Donation'
+FROM donation,bloodbank
+WHERE donation.Blood_ID=bloodbank.Blood_ID AND
+bloodbank.Blood_Type = Blood_Type
+GROUP BY year(donation.date_donate);
+
+By using command: 
+call GetBloodReport('A');
+
+2. Show procedure when the Hospital ID is submitted, it will generate the report about the  total amount of recipient of each blood type and total blood request quantity. This report will display the hospital id, hospital name, hospital state, recipient blood type, total amount of recipient of each blood type, total blood request quantity.
+
+CREATE PROCEDURE GetHosReport(IN Hos_ID varchar(5))
+SELECT hospital.Hos_ID,hospital.Hos_Name,hospital.Hos_State, recipient.Reci_BloodType,COUNT(recipient.Reci_ID) AS 'Total Amount Of Recipeint',SUM(recipient.Reci_BAmt) AS 'Total Amount Of Blood Used(ml)'
+FROM hospital, recipient
+WHERE hospital.Hos_ID = recipient.Hos_ID AND
+hospital.Hos_ID = Hos_ID
+GROUP BY Reci_BloodType;
+
+By using command: 
+call GetHosReport('H0002');
+
+3.Show procedure when the Donor ID is submitted, it will generate the report about the total number of donations per year. This report will display the donor id,  donor name, donor blood type, donor qualification, donation id, year of date donate), donation amount and staff id. 
+
+Create Procedure GetDonorReport(IN Donor_ID varchar(5))
+Select donor.Donor_ID,donor.Donor_Name,donor.Donor_BloodType,COUNT(donation.Donation_ID) AS 'Total Number of Donation', year(donation.Date_Donate), donation.Donation_Amt, staff.Staff_ID
+FROM donor, donation, staff
+WHERE donor.Donor_ID = donation.Donor_ID AND 
+donation.Staff_ID = staff.Staff_ID AND 
+donor.Donor_ID = Donor_ID
+GROUP BY year(donation.Date_Donate);
+
+By using command:
+call GetDonorReport('D0001’)
+
+TRIGGER
+1. recipient use blood bag -> (request) delete blood bag stock from blood bank (after insert) 
+(sql syntax) 
+
+CREATE DEFINER = CURRENT_USER TRIGGER `Blood Bank`.`Request Detail_AFTER_INSERT_1` 
+AFTER INSERT ON `Request Detail` 
+FOR EACH ROW
+BEGIN
+delete from `Blood_ID` from `Blood bank`  where `Blood_ID` = new.`Blood_ID`;
+END
+
+
+2.when insert make a entry ( donation straight away insert into blood bank) (after insert) 
+
+insert into `Blood Bank`.`Donation` values 
+('DNF011','2023-01-08','D0011', 'O','BL011','+','200','Klinik kesihatan Ayeh Keroh','S0001');	
+
+CREATE DEFINER = CURRENT_USER TRIGGER `Blood Bank`.`Donation_AFTER_INSERT` AFTER INSERT ON `Donation` FOR EACH ROW
+BEGIN
+insert into `Blood Bank` (`Blood_ID`,Blood_Type`, `Blood_Rhesus`,`Blood_Quantity`,`STAFF_ID`) values 
+(new.`BLOODID`,new.`Blood_Type` , new.`Blood_Rhesus`, new.`Blood_Quantity`,new.`STAFFID`) ;
+END
